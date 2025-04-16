@@ -14,13 +14,12 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int uId, String fullName, String email, String password, String phoneNo, Date createdTime) {
+	public User(int uId, String fullName, String email, String password, String phoneNo) {
 		this.uId = uId;
 		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
 		this.phoneNo = phoneNo;
-		this.createdTime = createdTime;
 	}
 
 	public int getuId() {

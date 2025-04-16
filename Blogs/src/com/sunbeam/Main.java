@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class Main {
 	private static Scanner scanner = new Scanner(System.in);
 	private static User currentUser = null;
+	
+	
 
 	public static int loginMenu() {
 		System.out.println("\n---LogIn Menu---");
@@ -36,11 +38,14 @@ public class Main {
 		return choice;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		UserDAO userDAO =new UserDAO();
 		int loginChoice;
 		while ((loginChoice = loginMenu())!=0) {
 			switch (loginChoice) {
 			case 1:
+				System.out.println("Enter ID");
+				int uId=scanner.nextInt();
 				System.out.print("Enter Full Name: ");
 				String fullName = scanner.nextLine();
 				System.out.print("Enter Email: ");
@@ -50,7 +55,7 @@ public class Main {
 				System.out.println("Enter Phone Number : ");
 				String phoneNo = scanner.nextLine();
 
-				User newUser = new User(fullName, email, password, phoneNo);
+				User newUser = new User(uId, fullName, email, password, phoneNo);
 				userDAO.register(newUser);
 				break;
 				
@@ -73,28 +78,46 @@ public class Main {
 					while ((choice = mainMenu())!=0) {
 						switch (choice) {
 						case 1:
-							addCategory();
+//							addCategory();
 							break;
 						case 2:
-							showCategories();
+//							showCategories();
 							break;
 						case 3:
-							displayAllBlogs();
+//							displayAllBlogs();
 							break;
 						case 4:
-							displayMyBlogs();
+//							displayMyBlogs();
 							break;
 						case 5:
-							addBlog();
+//							if (currentUser==null) {
+//								System.out.println("Please loggin");
+//								break;
+//							}
+//							Blog blog=new Blog();
+//							
+//							System.out.println("bId : ");
+//							blog.setCategoryId(scanner.nextInt());
+//							System.out.println("Title: ");
+//							blog.setTitle(scanner.nextLine());
+//							System.out.println("contents : ");
+//							blog.setContents(scanner.nextLine());
+//							blog.setUserId(currentUser.getuId());							
+//							System.out.println("categoryId : ");
+//							blog.setCategoryId(scanner.nextInt());
+//							
+//
+//							userDAO.addBlog(blog);
+//							System.out.println("blog Added!");
 							break;
 						case 6:
-							editBlog();
+//							editBlog();
 							break;
 						case 7:
-							searchblog();
+//							searchblog();
 							break;
 						case 8:
-							deleteBlog();
+//							deleteBlog();
 							break;
 						case 9:
 							currentUser = null;

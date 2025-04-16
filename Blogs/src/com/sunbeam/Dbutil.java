@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class Dbutil {
 	public static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String DB_URl = "jdbc:mysql://localhost:3306/hackathon";
+	public static final String DB_URl = "jdbc:mysql://localhost:3306/blogdb";
 	public static final String DB_USER = "KD2-89247-Mrityunjay";
 	public static final String DB_PASSWORD = "Ramnath@14";
 	static {
