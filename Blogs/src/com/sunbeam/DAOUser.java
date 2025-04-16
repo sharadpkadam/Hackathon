@@ -8,10 +8,20 @@ public interface DAOUser extends AutoCloseable {
 	User login(User user) throws Exception;
 
 	int addBlog(Blog blog) throws Exception;
+	
+	int addCategory(Category category) throws Exception;
 
 	List<Blog> getBlogByUser(int b_Id) throws Exception;
 
-	void updateBlogStatus(int bId) throws Exception;
+	void updateBlog(int bId, String contents) throws Exception;
 
 	void deleteBlog(int b_Id) throws Exception;
+	
+	List<Category> findAll() throws Exception;
+	
+	List<Blog> viewAllBlogs() throws Exception;
+	
+	List<Blog> findByUId(int uId) throws Exception;
+	
+	List<String> findBlogs(String word) throws Exception;
 }

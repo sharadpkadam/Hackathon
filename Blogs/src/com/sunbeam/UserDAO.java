@@ -22,14 +22,14 @@ public class UserDAO implements AutoCloseable,DAOUser {
 	}
 	@Override
 	public int addBlog(Blog blog) throws Exception {
-		String query = "INSERT INTO blogs (b_id,title, contents, c_id) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO blogs (b_id,title, contents,u_id, c_id) VALUES (?, ?, ?, ?,?)";
 		try (PreparedStatement stmt = con.prepareStatement(query)) {
 			stmt.setInt(1, blog.getbId());
 			stmt.setString(2, blog.getTitle());
 			stmt.setString(3, blog.getContents());
 //			stmt.setDate(4, blog.getCreateTime());
-//			stmt.setInt(4, blog.getUserId());
-			stmt.setInt(4, blog.getCategoryId());
+			stmt.setInt(4, blog.getUserId());
+			stmt.setInt(5, blog.getCategoryId());
 			return stmt.executeUpdate();
 		}
 	}
@@ -107,12 +107,106 @@ public class UserDAO implements AutoCloseable,DAOUser {
 	}
 
 	@Override
-	public void updateBlogStatus(int bId) throws Exception {
-		String query = "UPDATE tasks SET * WHERE b_id = ?";
+	public void updateBlog(int bId , String contents) throws Exception {
+		String query = "UPDATE blogs SET contents=? WHERE b_id = ?";
 		try (PreparedStatement stmt = con.prepareStatement(query)) {
-			stmt.setInt(1, bId);
+			stmt.setString(1, contents);
+			stmt.setInt(2, bId);
+			
 			stmt.executeUpdate();
 		}
 	}
+
+	@Override
+	public int addCategory(Category category) throws Exception {
+		String query = "INSERT INTO categories (c_id,title, description) VALUES (?, ?, ?)";
+		try (PreparedStatement stmt = con.prepareStatement(query)) {
+			stmt.setInt(1, category.getcId());
+			stmt.setString(2, category.getTitle());
+			stmt.setString(3, category.getDescription());
+			return stmt.executeUpdate();
+		}
+	}
+
+	@Override
+	public List<Category> findAll() throws Exception {
+		List<Category> list = new ArrayList<Category>();
+		String sql = "Select * from categories";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
+			try(ResultSet rs=stmt.executeQuery()){
+				while (rs.next()) {
+					int cId = rs.getInt("c_id");
+					String title = rs.getString("title");
+					String description = rs.getString("description");
+					Category c = new Category(cId,title,description);
+					list.add(c);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Blog> viewAllBlogs() throws Exception {
+		List<Blog> list = new ArrayList<Blog>();
+		String sql = "Select * from blogs";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
+			try(ResultSet rs=stmt.executeQuery()){
+				while (rs.next()) {
+					int bId = rs.getInt("b_id");
+					String title = rs.getString("title");
+					String contents = rs.getString("contents");
+					int cId = rs.getInt("c_id");
+					int uId = rs.getInt("u_id");
+					Blog c = new Blog(bId,title,contents, null, cId, uId);
+					list.add(c);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Blog> findByUId(int uId) throws Exception {
+		String query = "SELECT * FROM blogs WHERE u_id = ?";
+		List<Blog> blogs = new ArrayList<>();
+		try (PreparedStatement stmt = con.prepareStatement(query)) {
+			stmt.setInt(1, uId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int bId = rs.getInt("b_id");
+				String title = rs.getString("title");
+				String contents = rs.getString("contents");
+				Blog b = new Blog(bId, title, contents, null, uId, bId);
+				blogs.add(b);
+			}
+		}
+		return blogs;
+	}
+
+	@Override
+	public List<String> findBlogs(String word) throws Exception {
+		String sql = "SELECT * FROM blogs WHERE contents LIKE ?";
+		List<String> results = new ArrayList<>();
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+
+			stmt.setString(1, "%" + word + "%");
+
+			ResultSet resultSet = stmt.executeQuery();
+
+			while (resultSet.next()) {
+				results.add(resultSet.getString("contents").toLowerCase());
+			}
+		}
+		for (String result : results) {
+			System.out.println(result);
+		}
+		return results;
+	}
+
+	
+
+
+
 
 }

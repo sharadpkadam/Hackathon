@@ -1,5 +1,6 @@
 package com.sunbeam;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -78,26 +79,42 @@ public class Main {
 					while ((choice = mainMenu())!=0) {
 						switch (choice) {
 						case 1:
-//							addCategory();
+							Category category=new Category();
+							
+							System.out.println("cId : ");
+							category.setcId(scanner.nextInt());
+							System.out.println("Title: ");
+							category.setTitle(scanner.next());
+							System.out.println("description : ");
+							category.setDescription(scanner.next());
+							
+
+							userDAO.addCategory(category);
+							System.out.println("Category Added!");
 							break;
 						case 2:
-//							showCategories();
+							List<Category> list= userDAO.findAll();
+							for (Category c : list) {
+								System.out.println(c.toString());
+							}
 							break;
 						case 3:
-//							displayAllBlogs();
+							List<Blog> list1= userDAO.viewAllBlogs();
+							for (Blog c : list1) {
+								System.out.println(c.toString());
+							}
 							break;
 						case 4:
-//							displayMyBlogs();
+							List<Blog> list11= userDAO.findByUId(currentUser.getuId());
+							for (Blog c : list11) {
+								System.out.println(c.toString());
+							}
 							break;
 						case 5:
-							if (currentUser==null) {
-								System.out.println("Please loggin");
-								break;
-							}
 							Blog blog=new Blog();
 							
 							System.out.println("bId : ");
-							blog.setCategoryId(scanner.nextInt());
+							blog.setbId(scanner.nextInt());
 							System.out.println("Title: ");
 							blog.setTitle(scanner.next());
 							System.out.println("contents : ");
@@ -111,19 +128,30 @@ public class Main {
 							System.out.println("blog Added!");
 							break;
 						case 6:
-//							editBlog();
+							System.out.print("Enter blog ID to update: ");
+							int blogIdToUpdate = scanner.nextInt();
+							scanner.nextLine();
+							System.out.println("Enter new contents");
+							String newContent=scanner.nextLine();
+							userDAO.updateBlog(blogIdToUpdate, newContent);
+							System.out.println("Blog updated.");
 							break;
 						case 7:
-//							searchblog();
+							System.out.println("ENter the word : ");
+							String word = scanner.next();
+							userDAO.findBlogs(word);
 							break;
 						case 8:
-//							deleteBlog();
-							break;
-						case 9:
-							currentUser = null;
-							System.out.println("Logged out.");
-							break;
-						default:
+							System.out.print("Enter blog ID to delete: ");
+							int blogIdToDelete = scanner.nextInt();
+							userDAO.deleteBlog(blogIdToDelete);
+							System.out.println("Blog deleted.");
+								break;
+							case 0:
+								currentUser = null;
+								System.out.println("Logged out.");
+								break;
+							default:
 							break;
 						}
 					}
@@ -135,5 +163,15 @@ public class Main {
 				break;
 			}
 		}
+	}
+
+	private static void showCategories() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void addCategory() {
+		// TODO Auto-generated method stub
+		
 	}
 }
