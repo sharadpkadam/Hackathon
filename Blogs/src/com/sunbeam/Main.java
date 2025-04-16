@@ -47,13 +47,13 @@ public class Main {
 				System.out.println("Enter ID");
 				int uId=scanner.nextInt();
 				System.out.print("Enter Full Name: ");
-				String fullName = scanner.nextLine();
+				String fullName = scanner.next();
 				System.out.print("Enter Email: ");
-				String email = scanner.nextLine();
+				String email = scanner.next();
 				System.out.print("Enter Password: ");
-				String password = scanner.nextLine();
+				String password = scanner.next();
 				System.out.println("Enter Phone Number : ");
-				String phoneNo = scanner.nextLine();
+				String phoneNo = scanner.next();
 
 				User newUser = new User(uId, fullName, email, password, phoneNo);
 				userDAO.register(newUser);
@@ -90,25 +90,25 @@ public class Main {
 //							displayMyBlogs();
 							break;
 						case 5:
-//							if (currentUser==null) {
-//								System.out.println("Please loggin");
-//								break;
-//							}
-//							Blog blog=new Blog();
-//							
-//							System.out.println("bId : ");
-//							blog.setCategoryId(scanner.nextInt());
-//							System.out.println("Title: ");
-//							blog.setTitle(scanner.nextLine());
-//							System.out.println("contents : ");
-//							blog.setContents(scanner.nextLine());
-//							blog.setUserId(currentUser.getuId());							
-//							System.out.println("categoryId : ");
-//							blog.setCategoryId(scanner.nextInt());
-//							
-//
-//							userDAO.addBlog(blog);
-//							System.out.println("blog Added!");
+							if (currentUser==null) {
+								System.out.println("Please loggin");
+								break;
+							}
+							Blog blog=new Blog();
+							
+							System.out.println("bId : ");
+							blog.setCategoryId(scanner.nextInt());
+							System.out.println("Title: ");
+							blog.setTitle(scanner.next());
+							System.out.println("contents : ");
+							blog.setContents(scanner.next());
+							blog.setUserId(currentUser.getuId());							
+							System.out.println("categoryId : ");
+							blog.setCategoryId(scanner.nextInt());
+							
+
+							userDAO.addBlog(blog);
+							System.out.println("blog Added!");
 							break;
 						case 6:
 //							editBlog();

@@ -22,14 +22,14 @@ public class UserDAO implements AutoCloseable,DAOUser {
 	}
 	@Override
 	public int addBlog(Blog blog) throws Exception {
-		String query = "INSERT INTO blogs (b_id, contents, u_id, c_id) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO blogs (b_id,title, contents, c_id) VALUES (?, ?, ?, ?)";
 		try (PreparedStatement stmt = con.prepareStatement(query)) {
 			stmt.setInt(1, blog.getbId());
 			stmt.setString(2, blog.getTitle());
 			stmt.setString(3, blog.getContents());
 //			stmt.setDate(4, blog.getCreateTime());
-			stmt.setInt(4, blog.getUserId());
-			stmt.setInt(5, blog.getCategoryId());
+//			stmt.setInt(4, blog.getUserId());
+			stmt.setInt(4, blog.getCategoryId());
 			return stmt.executeUpdate();
 		}
 	}
@@ -41,10 +41,11 @@ public class UserDAO implements AutoCloseable,DAOUser {
 
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setInt(1, user.getuId());
-			stmt.setString(1, user.getFullName());
-			stmt.setString(2, user.getEmail());
-			stmt.setString(3, user.getPassword());
-			stmt.setString(3, user.getPhoneNo());
+			stmt.setString(2, user.getFullName());
+			stmt.setString(3, user.getEmail());
+			stmt.setString(4, user.getPassword());
+			stmt.setString(5, user.getPhoneNo());
+//			stmt.setDate(6, user.getCreatedTime());
 			count = stmt.executeUpdate();
 			System.out.println("User registered successfully.");
 		} catch (Exception e) {
@@ -62,8 +63,8 @@ public class UserDAO implements AutoCloseable,DAOUser {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					User loggedIn = new User();
-					loggedIn.setuId(rs.getInt("user_id"));
-					loggedIn.setFullName(rs.getString("name"));
+					loggedIn.setuId(rs.getInt("u_id"));
+					loggedIn.setFullName(rs.getString("full_name"));
 					loggedIn.setEmail(rs.getString("email"));
 					loggedIn.setPassword(rs.getString("password"));
 					System.out.println("Login successful.");
