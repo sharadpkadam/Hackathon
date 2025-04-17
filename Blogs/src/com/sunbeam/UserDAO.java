@@ -195,11 +195,11 @@ public class UserDAO implements AutoCloseable,DAOUser {
 			ResultSet resultSet = stmt.executeQuery();
 
 			while (resultSet.next()) {
-				results.add(resultSet.getString("contents").toLowerCase());
+				results.add(resultSet.getString("b_id")+"-"+resultSet.getString("title"));
 			}
 		}
 		for (String result : results) {
-			System.out.println(result);
+			System.out.println("Blog Id : "+result);
 		}
 		return results;
 	}

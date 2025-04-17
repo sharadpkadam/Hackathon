@@ -115,10 +115,12 @@ public class Main {
 							
 							System.out.println("bId : ");
 							blog.setbId(scanner.nextInt());
+							
 							System.out.println("Title: ");
-							blog.setTitle(scanner.next());
+							blog.setTitle(scanner.nextLine());
+							scanner.nextLine();
 							System.out.println("contents : ");
-							blog.setContents(scanner.next());
+							blog.setContents(scanner.nextLine());
 							blog.setUserId(currentUser.getuId());							
 							System.out.println("categoryId : ");
 							blog.setCategoryId(scanner.nextInt());
@@ -137,7 +139,7 @@ public class Main {
 							System.out.println("Blog updated.");
 							break;
 						case 7:
-							System.out.println("ENter the word : ");
+							System.out.println("Enter the word : ");
 							String word = scanner.next();
 							userDAO.findBlogs(word);
 							break;
@@ -165,13 +167,4 @@ public class Main {
 		}
 	}
 
-	private static void showCategories() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void addCategory() {
-		// TODO Auto-generated method stub
-		
-	}
 }
